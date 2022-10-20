@@ -1,11 +1,6 @@
-﻿using Customer.Domain.Client;
+﻿using Customer.Domain.Cadastro;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Customer.Repository.Mapping
 {

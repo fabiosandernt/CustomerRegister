@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Customer.Application.Cliente.Dto;
+using Customer.CrossCutting.JwtService.Contracts;
+using Customer.CrossCutting.JwtService.Dto;
 using Customer.Domain.Account.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using static Customer.Application.Cliente.Dto.UsuarioDto;
 
 namespace Customer.Application.Cliente.Service
 {
@@ -22,35 +21,76 @@ namespace Customer.Application.Cliente.Service
             _jwtService = jwtService;
         }
 
-        public Task<UsuarioDto.UsuarioOutputDto> Atualizar(UsuarioDto.UsuarioInputDto dto)
+        public async Task<UsuarioOutputDto> Criar(UsuarioInputDto dto)
         {
-            throw new NotImplementedException();
+            if (await _usuarioRepository.AnyAsync(x => x.Email.Valor == dto.Email.Valor))
+                throw new Exception("Já existe um usuário cadastrado com o email informado");
+
+            var usuario = this._mapper.Map<Customer.Domain.Account.Usuario>(dto);
+
+            usuario.Validate();
+            usuario.SetPassword();
+
+            usuario.Id = Guid.NewGuid();
+
+            await _usuarioRepository.Save(usuario);
+
+            return this._mapper.Map<UsuarioOutputDto>(usuario);
+
         }
 
-        public Task<UsuarioDto.UsuarioOutputDto> Criar(UsuarioDto.UsuarioInputDto dto)
+        public async Task<UsuarioOutputDto> Deletar([FromBody] UsuarioInputDto dto)
         {
-            throw new NotImplementedException();
+            var usuario = this._mapper.Map<Customer.Domain.Account.Usuario>(dto);
+
+            await this._usuarioRepository.Delete(usuario);
+
+            return this._mapper.Map<UsuarioOutputDto>(usuario);
+
         }
 
-        public Task<UsuarioDto.UsuarioOutputDto> Deletar(UsuarioDto.UsuarioInputDto dto)
+        public async Task<UsuarioOutputDto> Atualizar(UsuarioInputDto dto)
         {
-            throw new NotImplementedException();
+            if (!dto.Id.HasValue) throw new Exception("Usuário não encontrado");
+
+            if (await _usuarioRepository.AnyAsync(x => x.Email.Valor == dto.Email.Valor && x.Id != dto.Id))
+                throw new Exception("Já existe um usuário cadastrado com o email informado");
+
+            var usuario = await _usuarioRepository.GetbyExpressionAsync(x => x.Id == dto.Id.Value);
+            if (usuario is null) throw new Exception("Usuário não encontrado");
+
+            usuario.Update(dto.Nome, dto.Email, dto.Password, dto.TipoUsuario);
+
+            await this._usuarioRepository.Update(usuario);
+
+            return this._mapper.Map<UsuarioOutputDto>(usuario);
+
         }
 
-        public Task<UsuarioDto.UsuarioOutputDto> ObterPorId(Guid id)
+        public async Task<List<UsuarioOutputDto>> ObterTodos()
         {
-            throw new NotImplementedException();
+
+            var usuario = await this._usuarioRepository.GetAll();
+
+            return this._mapper.Map<List<UsuarioOutputDto>>(usuario);
         }
 
-        public Task<List<UsuarioDto.UsuarioOutputDto>> ObterTodos()
+        public async Task<UsuarioOutputDto> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            var usuario = await this._usuarioRepository.Get(id);
+
+            return this._mapper.Map<UsuarioOutputDto>(usuario);
+
         }
 
-        public Task<string> ObterTokenJwtAsync(LoginDto dto)
+        public async Task<string> ObterTokenJwtAsync(LoginDto dto)
         {
-            throw new NotImplementedException();
+            var usuario = await _usuarioRepository.GetbyExpressionAsync(x => x.Email.Valor == dto.Email && x.Password.Valor == dto.Password);
+            if (usuario is null) throw new Exception("Usuário não encontrado");
+
+            return await _jwtService.GenerateToken(new JwtDto(usuario.Id, usuario.Email?.Valor));
         }
     }
-
 }
+
+

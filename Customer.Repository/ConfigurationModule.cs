@@ -1,5 +1,6 @@
-﻿using Customer.Domain.Account.Repository;
-using Customer.Domain.Client.Repository;
+﻿
+using Customer.Domain.Account.Repository;
+using Customer.Domain.Cadastro.Repository;
 using Customer.Repository.Context;
 using Customer.Repository.Database;
 using Customer.Repository.Repository;

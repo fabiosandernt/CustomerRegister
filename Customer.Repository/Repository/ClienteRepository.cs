@@ -1,5 +1,5 @@
-﻿using Customer.Domain.Client;
-using Customer.Domain.Client.Repository;
+﻿using Customer.Domain.Cadastro;
+using Customer.Domain.Cadastro.Repository;
 using Customer.Repository.Context;
 using Customer.Repository.Database;
 using Microsoft.EntityFrameworkCore;

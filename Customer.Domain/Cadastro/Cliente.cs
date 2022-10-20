@@ -1,12 +1,8 @@
 ﻿using Customer.CrossCutting.Entity;
 using Customer.Domain.Account.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Customer.Domain.Client
+
+namespace Customer.Domain.Cadastro
 {
     public class Cliente : Entity<Guid>
     {

@@ -13,7 +13,7 @@ namespace Customer.Application.Cliente.Dto
     {
         public record UsuarioInputDto(
         Guid? Id,
-        [Required(ErrorMessage = "O nome é requerido!")] string Name,
+        [Required(ErrorMessage = "O nome é requerido!")] string Nome,
         [Required(ErrorMessage = "o Tipo é requerido!")] TipoUsuarioEnum TipoUsuario,
         [Required(ErrorMessage = "A Senha é requerida!")] Password Password,
         [Required(ErrorMessage = "O Email é requerido!")] Email Email
