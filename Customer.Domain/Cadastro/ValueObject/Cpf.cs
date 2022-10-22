@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 
 
-namespace Customer.Domain.Account.ValueObject
+namespace Customer.Domain.Cadastro.ValueObject
 {
     public class Cpf
     {

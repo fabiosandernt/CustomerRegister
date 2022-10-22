@@ -1,4 +1,6 @@
 ﻿using Customer.Application.Cliente.Service;
+using Customer.CrossCutting.JwtService.Contracts;
+using Customer.CrossCutting.JwtService;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Customer.Application
 {
@@ -22,8 +25,8 @@ namespace Customer.Application
 
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IClienteService, ClienteService>();
-       
 
+            services.AddScoped<IJwtService, JwtService>();
             services.AddHttpClient();
 
             services.AddCors(options =>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Customer.CrossCutting.JwtService.Dto
+﻿namespace Customer.CrossCutting.JwtService.Dto
 {
     public class JwtDto
     {

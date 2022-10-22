@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Customer.Domain.Account;
+using Customer.Domain.Cadastro;
 using Customer.Domain.Cadastro.Repository;
 using static Customer.Application.Cliente.Dto.ClienteDto;
 
@@ -15,23 +17,25 @@ namespace Customer.Application.Cliente.Service
             this._mapper = mapper;
         }
 
-        public async Task<ClienteOutputDto> Criar(ClienteInputDto dto)
+        public async Task<ClienteOutputDto> Criar(ClienteInputDto dto, Guid usuarioId)
         {
             if (await _clienteRepository.AnyAsync(x => x.Cpf == dto.Cfp)) 
                 throw new Exception("Já existe um cliente cadastrado com o mesmo CPF");
 
             var cliente = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
+            cliente.UsuarioId = usuarioId;
+
             await this._clienteRepository.Save(cliente);
             return this._mapper.Map<ClienteOutputDto>(cliente);
         }
-        public async Task<ClienteOutputDto> Deletar(ClienteInputDto dto)
+        public async Task<ClienteOutputDto> Deletar(ClienteInputDto dto, Guid usuarioId)
         {
             if (await _clienteRepository.AnyAsync(x => x.Cpf == dto.Cfp))
             {
-                var empresa = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
-                
-                await this._clienteRepository.Delete(empresa);
-                return this._mapper.Map<ClienteOutputDto>(empresa);
+                var cliente = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
+                cliente.UsuarioId = usuarioId;
+                await this._clienteRepository.Delete(cliente);
+                return this._mapper.Map<ClienteOutputDto>(cliente);
             }
             else
             {
@@ -40,11 +44,12 @@ namespace Customer.Application.Cliente.Service
             }
         }
 
-        public async Task<ClienteOutputDto> Atualizar(ClienteInputDto dto)
+        public async Task<ClienteOutputDto> Atualizar(ClienteInputDto dto, Guid usuarioId)
         {
             if (await _clienteRepository.AnyAsync(x=>x.Cpf == dto.Cfp))
             {
                 var cliente = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
+                cliente.UsuarioId = usuarioId;
                 await this._clienteRepository.Update(cliente);
                 return this._mapper.Map<ClienteOutputDto>(cliente);
             }

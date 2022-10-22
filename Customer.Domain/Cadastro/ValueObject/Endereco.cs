@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Customer.Domain.Account.ValueObject
+namespace Customer.Domain.Cadastro.ValueObject
 {
     public class Endereco
     {
@@ -34,13 +34,13 @@ namespace Customer.Domain.Account.ValueObject
         {
             unchecked
             {
-                var hashCode = (!string.IsNullOrWhiteSpace(NormalizedState)
+                var hashCode = !string.IsNullOrWhiteSpace(NormalizedState)
                     ? NormalizedStreet.GetHashCode()
-                    : 0);
-                hashCode = (hashCode * 397) ^ (!string.IsNullOrWhiteSpace(NormalizedCity)
+                    : 0;
+                hashCode = hashCode * 397 ^ (!string.IsNullOrWhiteSpace(NormalizedCity)
                     ? NormalizedCity.GetHashCode()
                     : 0);
-                hashCode = (hashCode * 397) ^ (!string.IsNullOrWhiteSpace(NormalizedState)
+                hashCode = hashCode * 397 ^ (!string.IsNullOrWhiteSpace(NormalizedState)
                     ? NormalizedState.GetHashCode()
                     : 0);
                 return hashCode;

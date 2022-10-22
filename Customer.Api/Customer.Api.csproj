@@ -25,8 +25,4 @@
     <ProjectReference Include="..\Customer.Repository\Customer.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

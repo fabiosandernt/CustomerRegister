@@ -7,6 +7,7 @@ namespace Customer.Application.Cliente.Handler.Command
     {
         public ClienteInputDto Cliente { get; set; }
 
+        public Guid IdUsuario { get; set; }
         public DeleteClienteCommand(ClienteInputDto cliente)
         {
             Cliente = cliente;
