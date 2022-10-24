@@ -12,7 +12,7 @@ namespace Customer.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClienteController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -50,7 +50,7 @@ namespace Customer.Api.Controllers
                 if (jwtTokenVm is null) return Unauthorized();
 
                 var result = await this.mediator.Send(new CreateClienteCommand(dto) { IdUsuario = jwtTokenVm.Id });
-
+               
                 return Created($"{result.Cliente.Id}", result.Cliente);
             }
             catch (Exception e)

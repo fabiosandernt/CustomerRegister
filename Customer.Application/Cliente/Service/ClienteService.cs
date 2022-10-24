@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Customer.Domain.Account;
-using Customer.Domain.Cadastro;
 using Customer.Domain.Cadastro.Repository;
+using Customer.Domain.Helpers.Extension;
 using static Customer.Application.Cliente.Dto.ClienteDto;
 
 namespace Customer.Application.Cliente.Service
@@ -11,20 +10,22 @@ namespace Customer.Application.Cliente.Service
         private readonly IClienteRepository _clienteRepository;
         private readonly IMapper _mapper;
 
-        public ClienteService(IClienteRepository empresaRepository, IMapper mapper)
+        public ClienteService(IClienteRepository clienteRepository, IMapper mapper)
         {
-            this._clienteRepository = empresaRepository;
+            this._clienteRepository = clienteRepository;
             this._mapper = mapper;
         }
 
         public async Task<ClienteOutputDto> Criar(ClienteInputDto dto, Guid usuarioId)
         {
-            if (await _clienteRepository.AnyAsync(x => x.Cpf == dto.Cfp)) 
+            if (await _clienteRepository.AnyAsync(x => x.Cpf.Number 
+            == dto.Cfp.Number)) 
                 throw new Exception("Já existe um cliente cadastrado com o mesmo CPF");
 
             var cliente = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
             cliente.UsuarioId = usuarioId;
-
+            cliente.Idade = cliente.Nascimento.CalculaIdade();
+            cliente.Cpf = dto.Cfp.Number;
             await this._clienteRepository.Save(cliente);
             return this._mapper.Map<ClienteOutputDto>(cliente);
         }
@@ -46,7 +47,7 @@ namespace Customer.Application.Cliente.Service
 
         public async Task<ClienteOutputDto> Atualizar(ClienteInputDto dto, Guid usuarioId)
         {
-            if (await _clienteRepository.AnyAsync(x=>x.Cpf == dto.Cfp))
+            if (await _clienteRepository.AnyAsync(x=>x.Cpf.Number == dto.Cfp.Number))
             {
                 var cliente = this._mapper.Map<Customer.Domain.Cadastro.Cliente>(dto);
                 cliente.UsuarioId = usuarioId;

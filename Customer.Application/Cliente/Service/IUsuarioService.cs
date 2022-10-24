@@ -1,9 +1,4 @@
 ﻿using Customer.Application.Cliente.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Customer.Application.Cliente.Dto.UsuarioDto;
 
 namespace Customer.Application.Cliente.Service

@@ -6,7 +6,7 @@ namespace Customer.Application.Cliente.Dto
 {
     public class ClienteDto
     {
-        public record ClienteInputDto(string Nome, Cpf Cfp, Endereco Endereco, TipoSexoEnum Sexo, DataSetDateTime Nascimento);
-        public record ClienteOutputDto(Guid Id, string Nome, Cpf Cfp, Endereco Endereco, TipoSexoEnum Sexo, DataSetDateTime Nascimento);
+        public record ClienteInputDto(string Nome, Cpf Cfp, Endereco Endereco, TipoSexoEnum Sexo, DateTime Nascimento);
+        public record ClienteOutputDto(Guid Id, string Nome, Cpf Cfp, Endereco Endereco, TipoSexoEnum Sexo, DateTime Nascimento);
     }
 }

@@ -1,12 +1,8 @@
 ﻿using Customer.CrossCutting.Repository;
 using Customer.Repository.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Customer.Repository.Database
 {
@@ -21,49 +17,52 @@ namespace Customer.Repository.Database
             this.Query = Context.Set<T>();
         }
 
-        public Task Save(T entity)
+        public async Task Delete(T entity)
         {
-            throw new NotImplementedException();
+            this.Query.Remove(entity);
+            await this.Context.SaveChangesAsync();
         }
 
-        public Task Delete(T entity)
+        public async Task<IEnumerable<T>> FindAllByCriterio(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await this.Query.Where(expression).ToListAsync();
         }
 
-        public Task Update(T entity)
+        public async Task<T> FindOneByCriterio(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await this.Query.FirstOrDefaultAsync(expression);
         }
 
-        public Task<T> Get(object id)
+        public async Task<T> Get(object id)
         {
-            throw new NotImplementedException();
+            return await this.Query.FindAsync(id);
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            throw new NotImplementedException();
+            return await this.Query.ToListAsync();
         }
 
-        public Task<IEnumerable<T>> FindAllByCriterio(Expression<Func<T, bool>> expression)
+        public async Task Save(T entity)
         {
-            throw new NotImplementedException();
+            await this.Query.AddAsync(entity);
+            await this.Context.SaveChangesAsync();
         }
 
-        public Task<T> FindOneByCriterio(Expression<Func<T, bool>> expression)
+        public async Task Update(T entity)
         {
-            throw new NotImplementedException();
+            this.Query.Update(entity);
+            await this.Context.SaveChangesAsync();
         }
 
-        public ValueTask<bool> AnyAsync(Expression<Func<T, bool>> expression)
+        public async ValueTask<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await Query.AnyAsync(expression);
         }
 
-        public ValueTask<T> GetbyExpressionAsync(Expression<Func<T, bool>> expression)
+        public async ValueTask<T> GetbyExpressionAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await Query.FirstOrDefaultAsync(expression);
         }
     }
 }

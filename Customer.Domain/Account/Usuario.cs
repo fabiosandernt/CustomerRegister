@@ -14,7 +14,6 @@ namespace Customer.Domain.Account
         public Email Email { get; set; }
         public Password Password { get; set; }
         public TipoUsuarioEnum TipoUsuario { get; set; }
-
         public virtual IList<Cliente> Clientes { get; set; }
              
         public void SetPassword()

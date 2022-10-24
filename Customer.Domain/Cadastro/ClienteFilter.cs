@@ -7,6 +7,7 @@ namespace Customer.Domain.Cadastro
     {
         public string Nome { get; set; }
         public DateTime? Nascimento { get; set; }
+        public int Idade { get; set; }  
         public string Cpf { get; set; }
         public string Estado { get; set; }
         public string Cidade { get; set; }

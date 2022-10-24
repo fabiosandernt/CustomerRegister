@@ -1,11 +1,7 @@
 ﻿using Customer.Domain.Account.Enums;
 using Customer.Domain.Account.ValueObject;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Customer.Application.Cliente.Dto
 {
@@ -19,6 +15,6 @@ namespace Customer.Application.Cliente.Dto
         [Required(ErrorMessage = "O Email é requerido!")] Email Email
     );
 
-        public record UsuarioOutputDto(Guid Id, string Name, TipoUsuarioEnum TipoUsuario, Email Email);
+        public record UsuarioOutputDto(Guid Id, string Nome, TipoUsuarioEnum TipoUsuario, Email Email);
     }
 }

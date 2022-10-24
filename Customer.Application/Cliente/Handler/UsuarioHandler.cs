@@ -3,11 +3,6 @@ using Customer.Application.Cliente.Handler.Command;
 using Customer.Application.Cliente.Handler.Query;
 using Customer.Application.Cliente.Service;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Customer.Application.Cliente.Handler
 {

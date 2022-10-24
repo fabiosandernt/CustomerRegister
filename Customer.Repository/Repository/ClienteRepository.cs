@@ -14,12 +14,12 @@ namespace Customer.Repository.Repository
 
         public async Task<IEnumerable<Cliente>> ObterTodosClientes()
         {
-            return await this.Query.Include(x => x.Cpf).ToListAsync();
+            return await this.Query.Include(x => x.Cpf.Number).ToListAsync();
         }
 
         public async Task<IEnumerable<Cliente>> ObterTodosClientesPorCpf(string cpf)
         {
-            return await this.Query.Where(x => x.Equals(cpf)).ToListAsync();
+            return await this.Query.Where(x => x.Cpf.Number == cpf).ToListAsync();  
         }
     }
 }

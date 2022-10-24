@@ -86,6 +86,7 @@ namespace Customer.Application.Cliente.Service
         public async Task<string> ObterTokenJwtAsync(LoginDto dto)
         {
             var usuario = await _usuarioRepository.GetbyExpressionAsync(x => x.Email.Valor == dto.Email && x.Password.Valor == dto.Password);
+
             if (usuario is null) throw new Exception("Usuário não encontrado");
 
             return await _jwtService.GenerateToken(new JwtDto(usuario.Id, usuario.Email?.Valor));

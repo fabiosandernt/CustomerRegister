@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace Customer.Application
 {
@@ -58,7 +57,7 @@ namespace Customer.Application
 
             var info = new OpenApiInfo();
             info.Version = "V1";
-            info.Title = "API Projeto Medicina";
+            info.Title = "API Projeto LineData";
 
             services.AddSwaggerGen(c =>
             {

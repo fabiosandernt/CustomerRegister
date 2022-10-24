@@ -8,12 +8,13 @@ namespace Customer.Repository.Mapping
     {
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
-            builder.ToTable("Empresa");
+            builder.ToTable("Clientes");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Nome).IsRequired();
-            builder.Property(x => x.Endereco).IsRequired();
-
+            builder.Property(x => x.Idade).IsRequired();
+            builder.Property(x => x.Nascimento).IsRequired();
+            
             builder.OwnsOne(x => x.Cpf,
                 ba =>
                 {
@@ -29,6 +30,8 @@ namespace Customer.Repository.Mapping
 
                     ba.Property(a => a.Estado);
                 }).Navigation(x => x.Endereco);
+
+            
         }
     }
 }

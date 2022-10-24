@@ -22,8 +22,9 @@ namespace Customer.Repository.Mapping
             builder.OwnsOne(x => x.Email, p =>
             {
                 p.Property(f => f.Valor).HasColumnName("Email").IsRequired().HasMaxLength(1024);
-            });           
+            });
 
+            builder.HasMany(p => p.Clientes).WithOne(p => p.Usuario);
         }
     }
 }
